@@ -36,7 +36,6 @@
             position: absolute;
             top: 7px;
             right: 110px;
-            
         }
 
 
@@ -96,9 +95,11 @@
                         <button id="cwc_MyCombo" class="list-group-item list-group-item-action cwc_c_btn_showRight" onclick="cwc_showCombo(@ViewBag.memberID)">我的套餐</button>
                         <button id="cwc_Coupon" class="list-group-item list-group-item-action cwc_c_btn_showRight" onclick="cwc_showCoupon(@ViewBag.memberID)">優惠券</button>
                         <button id="cwc_Review" class="list-group-item list-group-item-action cwc_c_btn_showRight" onclick="cwc_showReport(@ViewBag.memberID)">個人消費報表檢視</button>
-                        <button id="cwc_QRcode" class="list-group-item list-group-item-action cwc_c_btn_showRight" onclick="">邀請好友</button>
+                        <button id="cwc_QRcode" class="list-group-item list-group-item-action cwc_c_btn_showRight" onclick="cwc_showQRcode(@ViewBag.memberID)">邀請好友</button>
                         <button id="cwc_changePassword" class="list-group-item list-group-item-action cwc_c_btn_showRight" onclick="cwc_changePassword(@ViewBag.memberID)">修改密碼</button>
                         <button id="cwc_logout" class="list-group-item list-group-item-action" style="display:inline;" onclick="cwc_logout()">登出</button>
+                        <button id="cwc_logout" class="list-group-item list-group-item-action" style="display:inline;" onclick="test()">測試</button>
+
                     </div>
                 </div>
             </div>
@@ -127,7 +128,9 @@
     <script type="text/javascript" src="~/cwc/cwc_Combo.js"></script>
 
     <script>
-
+        function test() {
+            window.location.href="/Member/test"
+        }
         function updateData(memberID) {
             $.ajax({
                 url: `/Member/updateMemberCenter?id=${memberID}`,
@@ -383,6 +386,19 @@
                 url: "/Member/logout",
                 success: function (data) {
                     window.location.href="/HomePage/Home"
+                }
+            })
+        }
+
+        function cwc_showQRcode(memberID) {
+            $.ajax({
+                url: `/Member/QRcode?id=${memberID}`,
+                success: function (data) {
+                    console.log(data);
+                    $("#head_cwc").html(data[0]);
+                    var content = `<p>邀請連結 :${data[1]}</p>
+                                                <img src="http://www.funcode-tech.com/Encoder_Service/img.aspx?custid=1&username=public&codetype=QR&EClevel=0&data=${data[1]}" width="300"/>`
+                    $("#content_cwc").html(content);
                 }
             })
         }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using BuyFood_Template.Models;
@@ -12,10 +14,30 @@ namespace BuyFood_Template.Controllers
 {
     public class MemberController : Controller
     {
-        //public string test()
-        //{
-        //    return result.ToString();
-        //}
+        public void test()
+        {
+            MailMessage MyMail = new MailMessage();
+            MyMail.From = new MailAddress("always0537@gmail.com");
+            MyMail.To.Add("always0537@gmail.com"); //設定收件者Email
+            //MyMail.Bcc.Add("密件副本的收件者Mail"); //加入密件副本的Mail          
+            MyMail.Subject = "Email Test";
+            MyMail.Body = "<h1>HIHI</h1>"; //設定信件內容
+            MyMail.IsBodyHtml = true; //是否使用html格式
+            SmtpClient MySMTP = new SmtpClient("smtp.gmail.com",587);
+            MySMTP.Credentials = new NetworkCredential("account", "password");
+            MySMTP.EnableSsl = true;
+            MySMTP.UseDefaultCredentials = true;
+            try
+            {
+                MySMTP.Send(MyMail);
+                MySMTP = null;
+                MyMail.Dispose(); //釋放資源
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+        }
         public string checkLogin()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERNAME)))
@@ -82,6 +104,18 @@ namespace BuyFood_Template.Controllers
             HttpContext.Session.Remove(CDictionary.CURRENT_LOGINED_USERID);
             HttpContext.Session.Remove(CDictionary.CURRENT_LOGINED_USERNAME);
             HttpContext.Session.Remove(CDictionary.CURRENT_LOGINED_USERPHOTO);
+        }
+
+        public JsonResult QRcode(string id)
+        {
+            擺腹BuyFoodContext dbcontext = new 擺腹BuyFoodContext();
+            TMember targetMember = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == int.Parse(id));
+            string head = $"<h1>推薦碼 : {targetMember.CReferrerCode}</h1>";
+            string contenxt = $"/Customer/Create?id={targetMember.CReferrerCode}";
+            List<string> data = new List<string>();
+            data.Add(head);
+            data.Add(contenxt);
+            return Json(data);
         }
 
     }

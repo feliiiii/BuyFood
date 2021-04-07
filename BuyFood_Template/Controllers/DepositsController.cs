@@ -29,9 +29,11 @@ namespace BuyFood_Template.Controllers
         public void saveDepositResult(ViewModelForOPay returnData)
         {
             DateTime now = DateTime.Now;
+            擺腹BuyFoodContext dbcontext = new 擺腹BuyFoodContext();
+            TMember changeTarget = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == int.Parse(returnData.StoreID));
+            
             if (returnData.RtnCode == 1)
             {
-                擺腹BuyFoodContext dbcontext = new 擺腹BuyFoodContext();
                 TDeposit result = new TDeposit
                 {
                     CMemberId = int.Parse(returnData.StoreID),
@@ -40,11 +42,9 @@ namespace BuyFood_Template.Controllers
                     CDepositRecordNo = returnData.MerchantTradeNo
                 };
                 dbcontext.TDeposits.Add(result);
-                TMember changeTarget = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == int.Parse(returnData.StoreID));
                 changeTarget.CDeposit += returnData.TradeAmt;
 
                 int couponCategory=0;
-
                 switch (returnData.TradeAmt)
                 {
                     case 1000:
@@ -61,9 +61,7 @@ namespace BuyFood_Template.Controllers
                 }
                 if (couponCategory != 0)
                 {
-
                     string dsCode = "";
-                    
                     while (dsCode == "")
                     {
                         bool check = false;
@@ -79,8 +77,6 @@ namespace BuyFood_Template.Controllers
                         }
                         if (!check) dsCode = newCode;
                     }
-                        
-
                     TCupon newCoupon = new TCupon
                     {
                         CCuponCategoryId = couponCategory,
@@ -93,6 +89,9 @@ namespace BuyFood_Template.Controllers
                 }
                 dbcontext.SaveChanges();
             }
+            string EmailContent = returnData.RtnCode == 1 ?
+                $"已成功於{now.ToString("yyyy/MM/dd")}加值共{returnData.TradeAmt}擺腹幣" :
+                $"加值失敗，請重新加值並確認付款內容。";
         }
 
         public JsonResult buildOrderDeposit(string id, string set)
