@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuyFood_Template.Models;
 using BuyFood_Template.ViewModels;
 
-namespace prjBuyFood.Controllers
+namespace BuyFood_Template.Controllers
 {
     public class cProductController : Controller
     {

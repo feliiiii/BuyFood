@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace adminCode.Controllers
+namespace BuyFood_Template.Controllers
 {
     public class cCategoryController : Controller
     {
