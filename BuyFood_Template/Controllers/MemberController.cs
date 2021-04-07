@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using BuyFood_Template.Models;
 using BuyFood_Template.ViewModels;
@@ -11,12 +12,10 @@ namespace BuyFood_Template.Controllers
 {
     public class MemberController : Controller
     {
-
-        public string test()
-        {
-            var result = DateTime.Now.AddDays(30);
-            return result.ToString();
-        }
+        //public string test()
+        //{
+        //    return result.ToString();
+        //}
         public string checkLogin()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERNAME)))
@@ -78,7 +77,12 @@ namespace BuyFood_Template.Controllers
             return Json(data);
         }
 
-
+        public void logout()
+        {
+            HttpContext.Session.Remove(CDictionary.CURRENT_LOGINED_USERID);
+            HttpContext.Session.Remove(CDictionary.CURRENT_LOGINED_USERNAME);
+            HttpContext.Session.Remove(CDictionary.CURRENT_LOGINED_USERPHOTO);
+        }
 
     }
 

@@ -61,11 +61,31 @@ namespace BuyFood_Template.Controllers
                 }
                 if (couponCategory != 0)
                 {
+
+                    string dsCode = "";
+                    
+                    while (dsCode == "")
+                    {
+                        bool check = false;
+                        string newCode = (new ShareFunction()).產生亂數(6);
+                        var data = dbcontext.TCupons;
+                        foreach(var item in data)
+                        {
+                            if (item.CDiscountCode == newCode)
+                            {
+                                check = true;
+                                break;
+                            }
+                        }
+                        if (!check) dsCode = newCode;
+                    }
+                        
+
                     TCupon newCoupon = new TCupon
                     {
                         CCuponCategoryId = couponCategory,
                         CMenberId = int.Parse(returnData.StoreID),
-                        CDiscountCode = "XXXXX",
+                        CDiscountCode = dsCode,
                         CValidDate = now.AddDays(60),
                         CReceivedTime = now
                     };
