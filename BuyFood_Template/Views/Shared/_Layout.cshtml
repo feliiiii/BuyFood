@@ -159,7 +159,8 @@
                                 </ul>-->
                             </li>
                             <li><a asp-controller="Activity" asp-action="ShowActivity">活動一覽</a></li>
-                            <li><a asp-controller="Member" asp-action="MemberCenter">會員中心</a></li>
+
+                            <li><a href="javascript:void(0)" id="cwc_home_btn_memberCenter">會員中心</a></li>
                             <li><a asp-controller="Order" asp-action="SearchOrder">訂單查詢</a></li>
                         </ul>
                     </nav>
@@ -376,10 +377,8 @@
         <script src="~/js/signalr/dist/browser/signalr.js"></script>
         <script src="~/js/chat.js"></script>
         @*聊天室窗結束*@
+    <script type="text/javascript" src="~/cwc/homepage.js"></script>
 
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
 
 
         <script src="~/js/jquery-3.3.1.min.js"></script>
@@ -396,24 +395,7 @@
                     $('#sidebar_secondary').addClass('popup-box-on');
                 });
 
-                $("#removeClass").click(function () {
-                    $('#sidebar_secondary').removeClass('popup-box-on');
-                });
-            })
-        </script>
-        <script>
-            setInterval(function () {
-                let pdtcart_obj = JSON.parse(localStorage.getItem("cart"));
-                let price = 0;
-                for (let i = 0; i < pdtcart_obj.length; i++) {
-                    price += (pdtcart_obj[i].cPrice * pdtcart_obj[i].QuantityInCart);
-                }
-                $("#ItemMoneyTop").html('$' + price);
-                $("#itemMoney").html('$' + price);
-                console.log(price);
-            }, 500);
 
-        </script>
 
         <script>
 
