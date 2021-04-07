@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BuyFood_Template.Controllers
+namespace adminCode.Controllers
 {
-    public class Product_StatisticsController : Controller
+    public class cSalesAnalysisController : Controller
     {
-        public IActionResult Index()
+        public IActionResult List()
         {
             return View();
         }

@@ -12,6 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\cCategory\CategoryList.cshtml" />
+    <None Include="Views\cCategory\CreateCategory.cshtml" />
+    <None Include="Views\cCategory\EditCategory.cshtml" />
+    <None Include="Views\cCustomerAnalysis\List.cshtml" />
+    <None Include="Views\cOrderDetails\List.cshtml" />
+    <None Include="Views\cProduct\Create.cshtml" />
+    <None Include="Views\cProduct\Edit.cshtml" />
+    <None Include="Views\cProduct\List.cshtml" />
+    <None Include="Views\cSalesAnalysis\List.cshtml" />
     <None Include="Views\ProductDetail\ProductData.cshtml" />
     <None Include="Views\ShoppingCart\CurrentCartItem.cshtml" />
     <None Include="Views\ViewProduct\ShowProduct.cshtml" />
@@ -49,6 +58,7 @@
     <None Include="wwwroot\js\jquery.slicknav.js" />
     <None Include="wwwroot\js\main.js" />
     <None Include="wwwroot\js\mixitup.min.js" />
+    <None Include="wwwroot\js\myjs\ProductList.js" />
     <None Include="wwwroot\js\owl.carousel.min.js" />
     <None Include="wwwroot\js\RatingStarsJS.js" />
     <None Include="wwwroot\js\site.js" />
