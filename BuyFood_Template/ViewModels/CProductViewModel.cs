@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BuyFood_Template.Models;
 
-namespace adminCode.ViewModels
+namespace BuyFood_Template.ViewModels
 {
     public class CProductViewModel
     {

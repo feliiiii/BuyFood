@@ -1,6 +1,5 @@
-﻿
-using adminCode.ViewModels;
-using BuyFood_Template.Models;
+﻿using BuyFood_Template.Models;
+using BuyFood_Template.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

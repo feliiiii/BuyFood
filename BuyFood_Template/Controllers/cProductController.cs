@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using adminCode.ViewModels;
 using BuyFood_Template.Models;
+using BuyFood_Template.ViewModels;
 
 namespace prjBuyFood.Controllers
 {
