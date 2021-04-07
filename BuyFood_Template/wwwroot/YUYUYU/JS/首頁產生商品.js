@@ -1,29 +1,5 @@
 ﻿var pdtItemData = null;
 $(function () {
-    //$(window).on('load', function () {
-    //    //$(".loader").fadeOut();
-    //    //$("#preloder").delay(200).fadeOut("slow");
-
-    //    /*------------------
-    //        Gallery filter
-    //    --------------------*/
-    //    $('.featured__controls li').on('click', function () {
-
-    //        $('.featured__controls li').removeClass('active');
-    //        $(this).addClass('active');
-    //    });
-    //    if ($('.featured__filter').length > 0) {
-    //        var containerEl = document.querySelector('.featured__filter');
-    //        var mixer = mixitup(containerEl);
-    //    }
-    //});
-    //====觸發麵食
-    //$(function () {
-    //    setTimeout(function () {
-    //        $("#FirstCate").click();
-    //        console.log('I did it!');
-    //    }, 5000)
-    //});
 
     var arrProduct = {dataCate:[]};
 
@@ -54,8 +30,6 @@ $(function () {
                         pdtItemData = arrProduct.dataCate;
                         for (let y = 0; y < data_product.length; y++) {
                            
-                            
-
                             products += `<div class="col-lg-3 col-md-4 col-sm-6 mix categoryid_${data_product[y].cCategoryId}">
                                             <div class="featured__item">
                                                 <div class="featured__item__pic set-bg" style="background-image: url(${data_product[y].cPicture.replace("~", "")})">
