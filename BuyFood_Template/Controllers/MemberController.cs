@@ -4,19 +4,48 @@ using System.Linq;
 using System.Threading.Tasks;
 using BuyFood_Template.Models;
 using BuyFood_Template.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuyFood_Template.Controllers
 {
     public class MemberController : Controller
     {
+
+        public string test()
+        {
+            var result = DateTime.Now.AddDays(30);
+            return result.ToString();
+        }
+        public string checkLogin()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERNAME)))
+                return "1";
+            return "0";
+        }
         public IActionResult MemberCenter()
         {
-            擺腹BuyFoodContext dbcontext = new 擺腹BuyFoodContext();
-            ViewBag.memberID = 2;
-            TMember data = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == 2);
 
-            return View(new MemberCenterViewModel(data));
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERNAME)))
+            {
+                ViewBag.userName = HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERNAME);
+                ViewBag.userPhoto = HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERPHOTO);
+                ViewBag.memberID = HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERID);
+                擺腹BuyFoodContext dbcontext = new 擺腹BuyFoodContext();
+                TMember data = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == int.Parse(HttpContext.Session.GetString(CDictionary.CURRENT_LOGINED_USERID)));
+
+                return View(new MemberCenterViewModel(data));
+            }
+            ViewBag.memberID = 2;
+
+            擺腹BuyFoodContext ccc = new 擺腹BuyFoodContext();
+            TMember ddd = ccc.TMembers.FirstOrDefault(n => n.CMemberId ==2);
+            return View(new MemberCenterViewModel(ddd));
+
+            //else {
+            //    HttpContext.Session.SetString(CDictionary.REDIRECT_FROM_MEMBERCENTER, "1");
+            //    return RedirectToAction("登入", "HomePage");
+            //}
         }
 
         public JsonResult updateMemberCenter(string id)

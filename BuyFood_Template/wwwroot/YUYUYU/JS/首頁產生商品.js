@@ -33,10 +33,6 @@ $(function () {
         async: false,
         success: function (data_category) {
 
-
-
-
-
             //console.log(data_category);
             var category_li = `<ul><li class="active"  id="FirstCate" data-filter=".categoryid_${data_category[0].cProductCategoryId}">${data_category[0].cCategoryName}</li>`;
             for (let i = 1; i < data_category.length; i++) {

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 namespace BuyFood_Template.Controllers
 {
 
-    public class viewmodelforpay
+    public class ViewModelForOPay
     {
         public string MerchantTradeNo { get; set; }
         public string StoreID { get; set; }
@@ -26,20 +26,51 @@ namespace BuyFood_Template.Controllers
             return View();
         }
         [HttpPost]
-        public void saveDepositResult(viewmodelforpay aaa)
+        public void saveDepositResult(ViewModelForOPay returnData)
         {
-            if (aaa.RtnCode == 1)
+            DateTime now = DateTime.Now;
+            if (returnData.RtnCode == 1)
             {
                 擺腹BuyFoodContext dbcontext = new 擺腹BuyFoodContext();
                 TDeposit result = new TDeposit
                 {
-                    CMemberId = int.Parse(aaa.StoreID),
-                    CDepositTime = DateTime.Now,
-                    CDepositAmount = aaa.TradeAmt
+                    CMemberId = int.Parse(returnData.StoreID),
+                    CDepositTime = now,
+                    CDepositAmount = returnData.TradeAmt,
+                    CDepositRecordNo = returnData.MerchantTradeNo
                 };
                 dbcontext.TDeposits.Add(result);
-                TMember changeTarget = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == int.Parse(aaa.StoreID));
-                changeTarget.CDeposit += aaa.TradeAmt;
+                TMember changeTarget = dbcontext.TMembers.FirstOrDefault(n => n.CMemberId == int.Parse(returnData.StoreID));
+                changeTarget.CDeposit += returnData.TradeAmt;
+
+                int couponCategory=0;
+
+                switch (returnData.TradeAmt)
+                {
+                    case 1000:
+                        couponCategory = 2;
+                        break;
+                    case 2000:
+                        couponCategory = 4;
+                        break;
+                    case 5000:
+                        couponCategory = 7;
+                        break;
+                    default:
+                        break;
+                }
+                if (couponCategory != 0)
+                {
+                    TCupon newCoupon = new TCupon
+                    {
+                        CCuponCategoryId = couponCategory,
+                        CMenberId = int.Parse(returnData.StoreID),
+                        CDiscountCode = "XXXXX",
+                        CValidDate = now.AddDays(60),
+                        CReceivedTime = now
+                    };
+                    dbcontext.TCupons.Add(newCoupon);
+                }
                 dbcontext.SaveChanges();
             }
         }

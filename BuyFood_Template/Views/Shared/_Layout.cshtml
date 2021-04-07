@@ -156,7 +156,7 @@
                                 </ul>-->
                             </li>
                             <li><a asp-controller="Activity" asp-action="ShowActivity">活動一覽</a></li>
-                            <li><a asp-controller="Member" asp-action="MemberCenter">會員中心</a></li>
+                            <li><a href="javascript:void(0)" id="cwc_home_btn_memberCenter">會員中心</a></li>
                             <li><a asp-controller="Order" asp-action="SearchOrder">訂單查詢</a></li>
                         </ul>
                     </nav>
@@ -323,7 +323,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script type="text/javascript" src="~/cwc/homepage.js"></script>
 
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
@@ -356,6 +356,7 @@
             console.log(price);
         }, 500);
 
+
     </script>
 
     <script>
@@ -363,6 +364,7 @@
                 url: "/HomePage/BCheckLogin",
                 type: "POST",
                 success: function (data) {
+
                     if (data == true) {
                         text = `<a href="/Member/MemberCenter" id="getLoginName"><i class="fa fa-user"></i>@UserLoginNameForPage</a>`
 
