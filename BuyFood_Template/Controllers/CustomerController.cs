@@ -169,12 +169,12 @@ namespace BuyFood_Template.Controllers
             //抓推薦人
             if (!string.IsNullOrEmpty(newMember.code))
             {
-                var 抓邀請人 = from n in db.TMembers
+                var 抓推薦人 = from n in db.TMembers
                            where n.CReferrerCode == newMember.code
                            select n.CMemberId;
 
-                int[] 邀請人ID = 抓邀請人.ToArray();
-                newMember.CReferrerID = 邀請人ID[0];
+                int[] 推薦人ID = 抓推薦人.ToArray();
+                newMember.CReferrerID = 推薦人ID[0];
             }
             else
             {
@@ -197,9 +197,11 @@ namespace BuyFood_Template.Controllers
                           where n.CMemberId == newMember.CMemberID
                           select n.CReferrerId;
 
-            if (新增註冊折價卷 != null)
-            {
                 int?[] 邀請人ID = 新增註冊折價卷.ToArray();
+
+
+            if (邀請人ID[0] != null)
+            {
 
                 TCupon 新增邀請人折價卷 = new TCupon
                 {
