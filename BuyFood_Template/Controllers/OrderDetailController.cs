@@ -128,9 +128,64 @@ namespace BuyFood_Template.Controllers
             var StrTimeOfArrival = getTimeOfArrival.ToString("yyyy/MM/dd HH:mm:ss");
 
             return Json(StrTimeOfArrival);
-           
-
         }
+        DateTime nt = DateTime.Now;
+        public JsonResult LetBarMove(int OrderID,string ArriveTime)
+        {
+            var OrderTime = db.TOrders.Where(n => n.COrderId == OrderID).Select(n => n.COrderDate).FirstOrDefault();
+            DateTime oTime = DateTime.ParseExact(OrderTime, "yyyy/MM/dd HH:mm:ss", null);
+            DateTime aTime = DateTime.ParseExact(ArriveTime, "yyyy/MM/dd HH:mm:ss", null);
+             nt = DateTime.Now;
+            var BarPercent = (aTime-oTime).TotalSeconds ;
 
+            return Json(BarPercent);
+        }
+        
+        public JsonResult BiggerThanPrep(string PrepTime)
+        {
+            DateTime PT = DateTime.ParseExact(PrepTime, "yyyy/MM/dd HH:mm:ss", null);
+            //DateTime nt = DateTime.Now;
+            if (nt >= PT)
+            {
+                return Json("bigger");
+            }
+            else
+            {
+                return Json("sm");
+            }
+        }
+        public JsonResult BiggerThanSalir(string SalirTime)
+        {
+            DateTime ST = DateTime.ParseExact(SalirTime, "yyyy/MM/dd HH:mm:ss", null);
+            //DateTime nt = DateTime.Now;
+            if (nt >= ST)
+            {
+                return Json("bigger");
+            }
+            else
+            {
+                return Json("sm");
+            }
+        }
+        public JsonResult BiggerThanArrival(string ArriveTime)
+        {
+            DateTime AT = DateTime.ParseExact(ArriveTime, "yyyy/MM/dd HH:mm:ss", null);
+            //DateTime nt = DateTime.Now;
+            if (nt >= AT)
+            {
+                return Json("bigger");
+            }
+            else
+            {
+                return Json("sm");
+            }
+        }
+        public JsonResult CalTheSecs(string dataTimeOfPreparing)
+        {
+            DateTime tp = DateTime.ParseExact(dataTimeOfPreparing, "yyyy/MM/dd HH:mm:ss", null);
+            DateTime dtc = DateTime.Now;
+            var calResult = (dtc - tp).TotalSeconds;
+            return Json(calResult);
+        }
     }
 }
